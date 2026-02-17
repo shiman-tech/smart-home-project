@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">Register</h3>
+                </div>
+                <div class="card-body">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category if category != 'message' else 'info' }} alert-dismissible fade show">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                    
+                    <form method="POST" action="{{ url_for('register') }}">
+                        <div class="mb-3">
+                            <label for="first_name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name" required style="max-width: 400px; margin: 0 auto;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="last_name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name" required style="max-width: 400px; margin: 0 auto;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required style="max-width: 400px; margin: 0 auto;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="password" name="password" required style="max-width: 400px; margin: 0 auto;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="security_question" class="form-label">Security Question</label>
+                            <select class="form-select" id="security_question" name="security_question" required style="max-width: 400px; margin: 0 auto;">
+                                <option value="">Select a question</option>
+                                <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                                <option value="What was your first pet's name?">What was your first pet's name?</option>
+                                <option value="What is your favorite book?">What is your favorite book?</option>
+                                <option value="What is your favorite movie?">What is your favorite movie?</option>
+                                <option value="What was your first car?">What was your first car?</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="security_answer" class="form-label">Security Answer</label>
+                            <input type="text" class="form-control" id="security_answer" name="security_answer" required style="max-width: 400px; margin: 0 auto;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="country_code" class="form-label">Country Code</label>
+                            <input type="text" class="form-control" id="country_code" name="country_code" placeholder="+1" required style="max-width: 400px; margin: 0 auto;">
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone_number" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone_number" name="phone_number" required style="max-width: 400px; margin: 0 auto;">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Register</button>
+                        </div>
+                    </form>
+                    <hr>
+                    <p class="text-center">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

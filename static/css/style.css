@@ -1,0 +1,377 @@
+:root {
+    --smart-bg: #0f172a;
+    --smart-surface: #1e293b;
+    --smart-card: #334155;
+    --smart-accent: #38bdf8;
+    --smart-accent-dim: rgba(56, 189, 248, 0.15);
+    --smart-success: #34d399;
+    --smart-warning: #fbbf24;
+    --smart-text: #f1f5f9;
+    --smart-muted: #94a3b8;
+}
+
+body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    min-height: 100vh;
+    color: var(--smart-text);
+}
+
+.card {
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    background: var(--smart-surface);
+    color: var(--smart-text);
+}
+
+/* Room Card Styles */
+.room-card {
+    height: 300px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+}
+
+.room-card .card-body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.room-card .card-body-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    background: #fff;
+}
+
+.room-card .card-body-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.room-card .card-body-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.room-card .card-body-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.room-card .card-body-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Ensure proper spacing between room cards */
+.col-md-4 {
+    padding: 0.5rem;
+}
+
+.card-header {
+    background: rgba(51, 65, 85, 0.8);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 1rem 1.25rem;
+    font-size: 1rem;
+}
+
+.card-body {
+    padding: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.card-title {
+    color: var(--smart-text) !important;
+}
+
+.card-text, .text-muted {
+    color: var(--smart-muted) !important;
+}
+
+/* Scrollable Container Styles */
+.scrollable-container {
+    overflow-y: auto;
+    padding: 0.5rem;
+    border-radius: 8px;
+    background: rgba(30, 41, 59, 0.5);
+    max-height: 220px;
+    min-height: 120px;
+}
+
+/* Override card body padding for the readings section */
+.card-body .scrollable-container {
+    padding: 0;
+}
+
+/* Scrollbar Styling */
+.scrollable-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Prevent stretching */
+.container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.row {
+    margin: 0;
+}
+
+.col-12 {
+    padding: 0;
+}
+
+/* Fixed height for cards */
+.card {
+    min-height: 200px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Chart container */
+.chart-container {
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.card-title {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Room and Appliance Styles */
+.appliance-item {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.appliance-item:hover {
+    background-color: #f8f9fa;
+}
+
+.appliance-item:last-child {
+    border-bottom: none;
+}
+
+.appliance-item .appliance-name {
+    font-weight: 600;
+    color: var(--smart-text);
+}
+
+.appliance-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    color: var(--smart-muted);
+    font-size: 0.9rem;
+    align-items: center;
+}
+
+.reading-item {
+    padding: 0.5rem;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    min-height: 35px;
+    height: 35px;
+}
+
+.reading-item:hover {
+    background-color: #f8f9fa;
+}
+
+.reading-item:last-child {
+    border-bottom: none;
+}
+
+.reading-item .appliance-name {
+    font-weight: 600;
+    color: var(--smart-text);
+    flex: 1;
+}
+
+.reading-details {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    color: var(--smart-muted);
+    font-size: 0.875rem;
+    flex: 1;
+}
+
+.reading-details .current-power {
+    color: var(--smart-accent);
+    font-weight: 600;
+}
+
+/* Button Styles */
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.btn-danger {
+    margin-left: 0.5rem;
+}
+
+/* Alert Styles */
+.alert {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    border: none;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+/* Usage Stats */
+.usage-stats {
+    margin: 1rem 0;
+    padding: 1.25rem;
+    background: var(--smart-card);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+.usage-stats h6 {
+    color: var(--smart-muted);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.usage-stats h3 {
+    color: var(--smart-accent);
+    font-weight: 700;
+    margin-top: 0.25rem;
+}
+
+/* Status Badge */
+.status-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background-color: #e9ecef;
+}
+
+.status-badge.active {
+    background: var(--smart-success);
+    color: #0f172a;
+}
+
+.status-badge.inactive {
+    background: var(--smart-card);
+    color: var(--smart-muted);
+}
+
+.btn-outline-primary {
+    border-color: var(--smart-accent);
+    color: var(--smart-accent);
+}
+
+.btn-outline-primary:hover {
+    background: var(--smart-accent-dim);
+    border-color: var(--smart-accent);
+    color: var(--smart-accent);
+}
+
+.btn-primary {
+    background: var(--smart-accent);
+    border-color: var(--smart-accent);
+    color: var(--smart-bg);
+}
+
+.btn-primary:hover {
+    background: #7dd3fc;
+    border-color: #7dd3fc;
+    color: var(--smart-bg);
+}
+
+/* Alert Container */
+#alertContainer {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1050;
+    min-width: 300px;
+}
+
+#alertContainer .alert {
+    margin-bottom: 0.5rem;
+    animation: fadeIn 0.3s ease-in;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Chart Container */
+#usageChart {
+    min-height: 300px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .btn {
+        margin-bottom: 0.5rem;
+        width: 100%;
+    }
+    
+    .card {
+        margin-bottom: 1rem;
+    }
+    
+    .appliance-details {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+} 

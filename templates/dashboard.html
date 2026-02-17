@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+                <h1 class="mb-0 text-light"><i class="fas fa-bolt text-warning me-2"></i>Dashboard</h1>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="btn btn-warning btn-sm" id="simulateButton" title="Generate 7 days of sample usage data">
+                        <i class="fas fa-play"></i> Simulate Data
+                    </button>
+                    <button class="btn btn-info btn-sm" id="simulateAlertsBtn" title="Generate alerts based on current usage">
+                        <i class="fas fa-bell"></i> Simulate Alerts
+                    </button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModal">
+                        <i class="fas fa-plus"></i> Add Room
+                    </button>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addApplianceModal">
+                        <i class="fas fa-plug"></i> Add Appliance
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Stats -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="dashboardStats">
+                        <!-- Stats will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Usage Chart -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">Power Usage Over Time</h5>
+                    <div class="chart-container">
+                        <canvas id="usageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Energy Readings and Alerts -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Recent Energy Readings</h5>
+                </div>
+                <div class="card-body">
+                    <div class="scrollable-container">
+                        <div id="usageHistory">
+                            <!-- Energy readings will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">Alerts</h5>
+                </div>
+                <div class="card-body">
+                    <div class="scrollable-container">
+                        <div id="alertsContainer">
+                            <!-- Alerts will be dynamically added here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Room Cards -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="card-title mb-0">Room Usage</h5>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#editRoomModal" id="editRoomBtn" style="display: none;">
+                        <i class="fas fa-edit"></i> Edit Room
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="roomUsage">
+                        <!-- Room usage will be dynamically added here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>
+
+<!-- Add Room Modal -->
+<div class="modal fade" id="addRoomModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Room</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addRoomForm">
+                    <div class="mb-3">
+                        <label for="room_name" class="form-label">Room Name</label>
+                        <input type="text" class="form-control" id="room_name" name="room_name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Room</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Room Modal -->
+<div class="modal fade" id="editRoomModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Room</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editRoomForm">
+                    <input type="hidden" id="room_id" name="room_id">
+                    <div class="mb-3">
+                        <label for="edit_room_name" class="form-label">Room Name</label>
+                        <input type="text" class="form-control" id="edit_room_name" name="room_name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Appliance Modal -->
+<div class="modal fade" id="editApplianceModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Appliance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editApplianceForm">
+                    <input type="hidden" id="appliance_id" name="appliance_id">
+                    <div class="mb-3">
+                        <label for="edit_appliance_name" class="form-label">Appliance Name</label>
+                        <input type="text" class="form-control" id="edit_appliance_name" name="appliance_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="edit_quantity" name="quantity" value="1" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_min_power_rating_watt" class="form-label">Minimum Power Rating (Watts)</label>
+                        <input type="number" class="form-control" id="edit_min_power_rating_watt" name="min_power_rating_watt" value="0" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_max_power_rating_watt" class="form-label">Maximum Power Rating (Watts)</label>
+                        <input type="number" class="form-control" id="edit_max_power_rating_watt" name="max_power_rating_watt" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Appliance Modal -->
+<div class="modal fade" id="addApplianceModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Appliance</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="applianceForm">
+                    <div class="mb-3">
+                        <label for="room_id" class="form-label">Select Room</label>
+                        <select class="form-select" id="add_room_id" name="room_id" required>
+                            <option value="">Select a room</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appliance_name" class="form-label">Appliance Name</label>
+                        <input type="text" class="form-control" id="appliance_name" name="appliance_name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quantity" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="1" min="1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="min_power_rating_watt" class="form-label">Minimum Power Rating (Watts)</label>
+                        <input type="number" class="form-control" id="min_power_rating_watt" name="min_power_rating_watt" value="0" min="0" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="max_power_rating_watt" class="form-label">Maximum Power Rating (Watts)</label>
+                        <input type="number" class="form-control" id="max_power_rating_watt" name="max_power_rating_watt" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Appliance</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Alert Container -->
+<div id="alertContainer" style="position: fixed; top: 20px; right: 20px; z-index: 1050;"></div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+{% endblock %}
